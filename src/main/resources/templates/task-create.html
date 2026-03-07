@@ -3,52 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo công việc</title>
+    <title>Thêm Task</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Tạo công việc mới</h3>
-        </div>
 
-        <div class="card-body">
-            <form th:action="@{/tasks/save}" th:object="${task}" method="post">
-                
-                <div class="mb-3">
-                    <label class="form-label">Tên công việc</label>
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Nhập tên công việc">
+<body style="background:#f5f6fa">
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-dark text-white text-center">
+                    <h4>➕ Thêm công việc mới</h4>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Mô tả</label>
-                    <textarea class="form-control" th:field="*{description}" rows="4" placeholder="Nhập mô tả công việc"></textarea>
+                <div class="card-body">
+
+                    <form th:action="@{/tasks/save}" th:object="${task}" method="post">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Tên công việc</label>
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{title}"
+                                   placeholder="Ví dụ: Làm bài tập Java"
+                                   required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Chi tiết công việc</label>
+                            <textarea class="form-control"
+                                      th:field="*{description}"
+                                      rows="3"
+                                      placeholder="Nhập mô tả chi tiết..."></textarea>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Hạn hoàn thành</label>
+                                <input type="date"
+                                       class="form-control"
+                                       th:field="*{dueDate}">
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Tình trạng</label>
+                                <select class="form-select" th:field="*{status}">
+                                    <option value="PENDING">⏳ Chưa bắt đầu</option>
+                                    <option value="IN_PROGRESS">🚧 Đang thực hiện</option>
+                                    <option value="DONE">✅ Đã hoàn thành</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="text-end">
+
+                            <a th:href="@{/tasks}" class="btn btn-outline-secondary me-2">
+                                Hủy
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                💾 Lưu công việc
+                            </button>
+
+                        </div>
+
+                    </form>
+
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Ngày hết hạn</label>
-                    <input type="date" class="form-control" th:field="*{dueDate}">
-                </div>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Trạng thái</label>
-                    <select class="form-select" th:field="*{status}">
-                        <option value="PENDING">Chưa làm</option>
-                        <option value="IN_PROGRESS">Đang làm</option>
-                        <option value="DONE">Hoàn thành</option>
-                    </select>
-                </div>
-
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success">Lưu</button>
-                    <a th:href="@{/tasks}" class="btn btn-secondary">Quay lại</a>
-                </div>
-
-            </form>
         </div>
     </div>
+
 </div>
+
 </body>
 </html>
