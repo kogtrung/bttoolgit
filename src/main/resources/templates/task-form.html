@@ -79,7 +79,6 @@
                         </div>
 
 
-                        
                         <!-- Form tạo mới -->
                         <form th:if="${task.id == null}" th:action="@{/tasks/create}" th:object="${task}" method="post">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -95,6 +94,8 @@
                                 <button type="submit" class="btn btn-primary">Tạo công việc</button>
                             </div>
                         </form>
+
+
 
                         <!-- Form cập nhật -->
                         <form th:if="${task.id != null}" th:action="@{/tasks/update}" method="post">
