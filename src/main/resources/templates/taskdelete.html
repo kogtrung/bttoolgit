@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirm Delete Task</title>
+    <meta charset="UTF-8">
+
+    <style>
+
+        body{
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .card{
+            background:white;
+            padding:40px;
+            width:420px;
+            border-radius:12px;
+            text-align:center;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            margin-bottom:10px;
+        }
+
+        p{
+            color:#555;
+            margin-bottom:25px;
+        }
+
+        .btn-group{
+            display:flex;
+            justify-content:center;
+            gap:15px;
+        }
+
+        button{
+            padding:10px 22px;
+            border:none;
+            border-radius:6px;
+            font-size:14px;
+            cursor:pointer;
+        }
+
+        .btn-delete{
+            background:#e63946;
+            color:white;
+        }
+
+        .btn-delete:hover{
+            background:#c1121f;
+        }
+
+        .btn-back{
+            background:#457b9d;
+            color:white;
+        }
+
+        .btn-back:hover{
+            background:#1d3557;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Delete Task</h2>
+
+    <p>
+        Do you really want to delete this task?
+        This action cannot be undone.
+    </p>
+
+    <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post">
+
+        <div class="btn-group">
+
+            <button class="btn-delete" type="submit">
+                Delete
+            </button>
+
+            <a th:href="@{/tasks}">
+                <button class="btn-back" type="button">
+                    Back
+                </button>
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
