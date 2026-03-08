@@ -27,14 +27,15 @@
             <td th:text="${task.createdAt}"></td>
 
             <td>
-
+ 
                 <!-- Nút Complete -->
                 <a th:if="${task.status != 'COMPLETED'}"
                    th:href="@{/tasks/complete/{id}(id=${task.id})}">
                     Complete
                 </a>
 
-                <!-- Nếu đã hoàn thành -->
+                
+           
                 <span th:if="${task.status == 'COMPLETED'}">
                     Done
                 </span>
