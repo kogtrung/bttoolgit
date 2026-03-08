@@ -1,210 +1,48 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Task Manager</title>
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:Arial;
-background:linear-gradient(135deg,#36d1dc,#5b86e5);
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-.container{
-background:white;
-width:450px;
-padding:35px;
-border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
-}
-
-.header{
-text-align:center;
-margin-bottom:25px;
-}
-
-.header h1{
-color:#333;
-margin-bottom:5px;
-}
-
-.date{
-font-size:13px;
-color:#777;
-}
-
-.input-area{
-display:flex;
-gap:10px;
-margin-bottom:20px;
-}
-
-.input-area input{
-flex:1;
-padding:10px;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-.input-area button{
-padding:10px 16px;
-border:none;
-background:#5b86e5;
-color:white;
-border-radius:6px;
-cursor:pointer;
-}
-
-.input-area button:hover{
-background:#4166c9;
-}
-
-ul{
-list-style:none;
-margin-top:10px;
-}
-
-li{
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:#f4f6fb;
-padding:10px;
-border-radius:6px;
-margin-bottom:10px;
-}
-
-.task-left{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.completed span{
-text-decoration:line-through;
-color:#888;
-}
-
-.delete{
-background:#ff4d4d;
-border:none;
-color:white;
-padding:6px 10px;
-border-radius:5px;
-cursor:pointer;
-}
-
-.delete:hover{
-background:#e60000;
-}
-
-.footer{
-margin-top:15px;
-display:flex;
-justify-content:space-between;
-font-size:13px;
-color:#555;
-}
-
-.clear{
-cursor:pointer;
-color:#5b86e5;
-}
-</style>
+    <title>Task List</title>
+    <meta charset="UTF-8">
 </head>
-
 <body>
 
-<div class="container">
+<h2>Danh sách công việc</h2>
 
-<div class="header">
-<h1>Task Manager</h1>
-<p class="date" id="today"></p>
-</div>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
-<div class="input-area">
-<input type="text" id="taskInput" placeholder="Thêm công việc...">
-<button onclick="addTask()">Add</button>
-</div>
+    <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:text="${task.createdAt}"></td>
 
-<ul id="taskList"></ul>
+            <td>
 
-<div class="footer">
-<span id="count">0 tasks</span>
-<span class="clear" onclick="clearAll()">Clear All</span>
-</div>
+                <!-- Nút Complete -->
+                <a th:if="${task.status != 'COMPLETED'}"
+                   th:href="@{/tasks/complete/{id}(id=${task.id})}">
+                    Complete
+                </a>
 
-</div>
+                <!-- Nếu đã hoàn thành -->
+                <span th:if="${task.status == 'COMPLETED'}">
+                    Done
+                </span>
 
-<script>
-
-const today = new Date().toLocaleDateString('vi-VN');
-document.getElementById("today").textContent="Hôm nay: "+today;
-
-function addTask(){
-
-const input=document.getElementById("taskInput");
-const text=input.value.trim();
-
-if(text===""){
-alert("Nhập công việc!");
-return;
-}
-
-const li=document.createElement("li");
-
-li.innerHTML=`
-<div class="task-left">
-<input type="checkbox" onclick="toggleTask(this)">
-<span>${text}</span>
-</div>
-<button class="delete" onclick="deleteTask(this)">Xóa</button>
-`;
-
-document.getElementById("taskList").appendChild(li);
-
-input.value="";
-
-updateCount();
-}
-
-function deleteTask(btn){
-btn.parentElement.remove();
-updateCount();
-}
-
-function toggleTask(cb){
-cb.parentElement.parentElement.classList.toggle("completed");
-}
-
-function clearAll(){
-document.getElementById("taskList").innerHTML="";
-updateCount();
-}
-
-function updateCount(){
-const total=document.querySelectorAll("#taskList li").length;
-document.getElementById("count").textContent=total+" tasks";
-}
-
-document.getElementById("taskInput").addEventListener("keypress",function(e){
-if(e.key==="Enter"){
-addTask();
-}
-});
-
-</script>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
