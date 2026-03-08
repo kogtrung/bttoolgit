@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task List</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Danh sách công việc</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:text="${task.createdAt}"></td>
+
+            <td>
+ 
+                <!-- Nút Complete -->
+                <a th:if="${task.status != 'COMPLETED'}"
+                   th:href="@{/tasks/complete/{id}(id=${task.id})}">
+                    Complete
+                </a>
+
+                
+           
+                <span th:if="${task.status == 'COMPLETED'}">
+                    Done
+                </span>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
